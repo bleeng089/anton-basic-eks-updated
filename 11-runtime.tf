@@ -1,7 +1,8 @@
+# https://developer.hashicorp.com/terraform/language/expressions/conditionals
 # Connect to cluster (add proper context to kubeconfig)
 
 resource "null_resource" "update_kubeconfig" {
-  count = var.enable_kubeconfig ? 1 : 0
+  count = var.enable_kubeconfig ? 1 : 0 
 
   provisioner "local-exec" {
     #interpreter = ["/usr/bin/env", "bash"]
