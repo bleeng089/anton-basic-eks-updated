@@ -24,25 +24,12 @@ spec:
           curl -o make-data.py https://raw.githubusercontent.com/dockersamples/example-voting-app/refs/heads/main/seed-data/make-data.py
           python3 make-data.py
           
-          # Wait for vote service to be ready
-          echo "Waiting for vote service..."
-          until curl -f -s $VOTE_SERVICE_URL > /dev/null 2>&1; do
-            echo "Vote service not ready, waiting..."
-            sleep 2
-          done
+          # Download and run the shell script
+          curl -o generate-votes.sh https://raw.githubusercontent.com/aaron-dm-mcdonald/anton-basic-eks-updated/refs/heads/main/voting-app/seed/generate-votes.sh
+          chmod +x generate-votes.sh
           
-          # Send votes using apache bench
-          VOTE_URL=$VOTE_SERVICE_URL
-          echo "Sending 1000 votes for option A..."
-          ab -n 1000 -c 50 -p posta -T "application/x-www-form-urlencoded" $VOTE_URL/
-          
-          echo "Sending 1000 votes for option B..."
-          ab -n 1000 -c 50 -p postb -T "application/x-www-form-urlencoded" $VOTE_URL/
-          
-          echo "Sending 1000 more votes for option A..."
-          ab -n 1000 -c 50 -p posta -T "application/x-www-form-urlencoded" $VOTE_URL/
-          
-          echo "Seeding completed!"
+          # Run the voting script (now includes wait logic)
+          ./generate-votes.sh
         env:
         - name: VOTE_SERVICE_URL
           value: "http://vote"
