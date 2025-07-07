@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Set default values if environment variables are not provided
-VOTES_A=${VOTES_A:-2000}
+VOTES_A=${VOTES_A:-1000}
 VOTES_B=${VOTES_B:-1000}
 
 echo "Configuration:"

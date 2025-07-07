@@ -30,7 +30,7 @@ spec:
         env:
         - name: VOTE_SERVICE_URL
           value: "http://vote"
-        - name: VOTES_A
+        - name: VOTES_A   # Cats
+          value: "1"
+        - name: VOTES_B   # Dogs
           value: "4000"
-        - name: VOTES_B
-          value: "1000"
