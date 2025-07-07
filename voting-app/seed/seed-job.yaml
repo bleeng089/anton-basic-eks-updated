@@ -1,9 +1,8 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: voting-seed
+  name: seed
 spec:
-  backoffLimit: 3                    # Retry up to 3 times if pod fails
   activeDeadlineSeconds: 300         # Kill job if it runs longer than 5 minutes
   ttlSecondsAfterFinished: 120       # Auto-delete job 2 minutes after completion
   completions: 1                     # Job succeeds when 1 pod completes successfully
@@ -27,9 +26,11 @@ spec:
           # Download and run the shell script
           curl -o generate-votes.sh https://raw.githubusercontent.com/aaron-dm-mcdonald/anton-basic-eks-updated/refs/heads/main/voting-app/seed/generate-votes.sh
           chmod +x generate-votes.sh
-          
-          # Run the voting script (now includes wait logic)
           ./generate-votes.sh
         env:
         - name: VOTE_SERVICE_URL
           value: "http://vote"
+        - name: VOTES_A
+          value: "4000"
+        - name: VOTES_B
+          value: "1000"
